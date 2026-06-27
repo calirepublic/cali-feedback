@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>California Republic Feedback</title>
+  <meta name="theme-color" content="#b42318">
+  <style>
+    :root {
+      --ink: #171412;
+      --muted: #6b625d;
+      --paper: #fffaf0;
+      --panel: #fffdf8;
+      --line: #e7ded1;
+      --red: #b42318;
+      --red-dark: #861a14;
+      --gold: #f2bd4b;
+      --sage: #54765f;
+      --shadow: 0 22px 60px rgba(63, 43, 26, 0.16);
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(180, 35, 24, 0.1), rgba(255, 250, 240, 0) 42%),
+        var(--paper);
+      color: var(--ink);
+    }
+
+    main {
+      width: min(100%, 520px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 22px 18px 32px;
+      display: grid;
+      align-content: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .mark {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--panel);
+      box-shadow: 5px 5px 0 var(--red);
+      flex: 0 0 auto;
+      position: relative;
+    }
+
+    .mark::before {
+      content: "★";
+      color: var(--red);
+      font-size: 22px;
+      transform: translateY(-1px);
+    }
+
+    .brand-name {
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 850;
+    }
+
+    .brand-sub {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .panel {
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .stripe {
+      height: 9px;
+      background: linear-gradient(90deg, var(--red) 0 34%, var(--gold) 34% 67%, var(--sage) 67% 100%);
+    }
+
+    .content {
+      padding: 28px 22px 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 11vw, 3.35rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .stars {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 28px 0 8px;
+      border: 0;
+      padding: 0;
+    }
+
+    .star-button {
+      width: 100%;
+      aspect-ratio: 1;
+      border: 1px solid #dccfbd;
+      border-radius: 8px;
+      background: #fff8e9;
+      color: #b38423;
+      font-size: clamp(1.75rem, 10vw, 2.5rem);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+    }
+
+    .star-button:hover,
+    .star-button:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      outline: 3px solid rgba(242, 189, 75, 0.26);
+      outline-offset: 2px;
+    }
+
+    .star-button.is-selected {
+      background: var(--gold);
+      border-color: #d79d28;
+      color: #3b2a08;
+    }
+
+    .hint {
+      min-height: 1.35rem;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .result {
+      display: none;
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .result.is-visible { display: block; }
+
+    .message {
+      margin: 0 0 18px;
+      font-size: 1.25rem;
+      line-height: 1.35;
+      font-weight: 750;
+    }
+
+    .button {
+      width: 100%;
+      min-height: 54px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--red);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(180, 35, 24, 0.24);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      background: var(--red-dark);
+      outline: 3px solid rgba(180, 35, 24, 0.22);
+      outline-offset: 3px;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #d8cbbb;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      padding: 13px 14px;
+      min-height: 48px;
+    }
+
+    textarea {
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: 3px solid rgba(84, 118, 95, 0.2);
+      border-color: var(--sage);
+    }
+
+    .required {
+      color: var(--red);
+    }
+
+    .small {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .footer-note {
+      margin: 16px auto 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    @media (min-width: 560px) {
+      main { padding-block: 44px; }
+      .content { padding: 34px 32px 30px; }
+      .stars { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="brand" aria-label="California Republic">
+      <div class="mark" aria-hidden="true"></div>
+      <div>
+        <p class="brand-name">California<br>Republic</p>
+        <p class="brand-sub">Guest feedback</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="stripe" aria-hidden="true"></div>
+      <div class="content">
+        <h1>How was your visit today?</h1>
+        <p class="lead">Tap a star to tell us how we did.</p>
+
+        <fieldset class="stars" aria-label="Choose a rating from 1 to 5 stars">
+          <button class="star-button" type="button" data-rating="1" aria-label="1 star">★</button>
+          <button class="star-button" type="button" data-rating="2" aria-label="2 stars">★</button>
+          <button class="star-button" type="button" data-rating="3" aria-label="3 stars">★</button>
+          <button class="star-button" type="button" data-rating="4" aria-label="4 stars">★</button>
+          <button class="star-button" type="button" data-rating="5" aria-label="5 stars">★</button>
+        </fieldset>
+        <p class="hint" id="ratingHint" aria-live="polite"></p>
+
+        <div class="result" id="reviewResult">
+          <p class="message">Thank you. It means a lot to the team.</p>
+          <a class="button" id="googleReviewButton" href="#" target="_blank" rel="noopener">Leave a Google Review</a>
+          <p class="small">Google may ask you to sign in first, then opens the rating screen for California Republic St Ives.</p>
+        </div>
+
+        <div class="result" id="feedbackResult">
+          <p class="message">Thanks for letting us know. We’d like to make it right.</p>
+          <form id="feedbackForm" method="POST" action="https://formsubmit.co/hellocalirepublic@gmail.com">
+            <input type="hidden" name="_subject" value="California Republic customer feedback">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" id="ratingField" name="Rating" value="">
+
+            <label>
+              Table Number
+              <input name="Table Number" inputmode="numeric" autocomplete="off" placeholder="Optional">
+            </label>
+
+            <label>
+              Name
+              <input name="Name" autocomplete="name" placeholder="Optional">
+            </label>
+
+            <label>
+              Phone or Email
+              <input name="Contact" autocomplete="email" placeholder="Optional">
+            </label>
+
+            <label>
+              Comments <span class="required">Required</span>
+              <textarea name="Comments" required placeholder="Tell us what happened"></textarea>
+            </label>
+
+            <button class="button" type="submit">Send Feedback</button>
+          </form>
+          <p class="small">Your note goes to hellocalirepublic@gmail.com.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">California Republic</p>
+  </main>
+
+  <script>
+    const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJh1zPaGapEmsRKj4WVTovM0w";
+
+    const stars = Array.from(document.querySelectorAll(".star-button"));
+    const hint = document.getElementById("ratingHint");
+    const reviewResult = document.getElementById("reviewResult");
+    const feedbackResult = document.getElementById("feedbackResult");
+    const ratingField = document.getElementById("ratingField");
+    const googleReviewButton = document.getElementById("googleReviewButton");
+
+    googleReviewButton.href = GOOGLE_REVIEW_URL;
+
+    function setRating(rating) {
+      stars.forEach((star) => {
+        const value = Number(star.dataset.rating);
+        star.classList.toggle("is-selected", value <= rating);
+        star.setAttribute("aria-pressed", String(value === rating));
+      });
+
+      ratingField.value = `${rating} star${rating === 1 ? "" : "s"}`;
+      hint.textContent = `${rating} star${rating === 1 ? "" : "s"} selected`;
+      reviewResult.classList.toggle("is-visible", rating >= 4);
+      feedbackResult.classList.toggle("is-visible", rating <= 3);
+    }
+
+    stars.forEach((star) => {
+      star.setAttribute("aria-pressed", "false");
+      star.addEventListener("click", () => setRating(Number(star.dataset.rating)));
+    });
+  </script>
+</body>
+</html>
