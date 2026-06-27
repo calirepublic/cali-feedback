@@ -44,28 +44,15 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
+      justify-content: center;
+      margin-bottom: 22px;
     }
 
-    .mark {
-      width: 48px;
-      height: 48px;
-      border: 2px solid var(--ink);
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      background: var(--panel);
-      box-shadow: 5px 5px 0 var(--red);
-      flex: 0 0 auto;
-      position: relative;
-    }
-
-    .mark::before {
-      content: "★";
-      color: var(--red);
-      font-size: 22px;
-      transform: translateY(-1px);
+    .logo {
+      width: min(76vw, 250px);
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 12px 20px rgba(63, 43, 26, 0.14));
     }
 
     .brand-name {
@@ -268,11 +255,7 @@
 <body>
   <main>
     <section class="brand" aria-label="California Republic">
-      <div class="mark" aria-hidden="true"></div>
-      <div>
-        <p class="brand-name">California<br>Republic</p>
-        <p class="brand-sub">Guest feedback</p>
-      </div>
+      <img class="logo" src="Calilogo.jpeg" alt="California Republic">
     </section>
 
     <section class="panel">
